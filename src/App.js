@@ -15,8 +15,6 @@ class App extends Component {
       categorySelected: false,
       products: [],
       cartProducts: [],
-      quantity: 0,
-      quantityArray: [],
     };
     this.handleSearchByQuery = this.handleSearchByQuery.bind(this);
     this.OnClickSearch = this.OnClickSearch.bind(this);
@@ -43,18 +41,9 @@ class App extends Component {
 
   addCartProducts({ target }) {
     const { value } = target;
-    const { cartProducts } = this.state;
     this.setState((prevState) => ({
-      quantity: prevState.quantity + 1,
+      cartProducts: [...prevState.cartProducts, value],
     }));
-    if (cartProducts.every((id) => value !== id)) {
-      const { quantity } = this.state;
-      this.setState((prevState) => ({
-        cartProducts: [...prevState.cartProducts, value],
-        quantityArray: [...prevState.quantityArray, quantity],
-        quantity: 0,
-      }));
-    }
   }
 
   async OnClickSearch() {
@@ -74,7 +63,7 @@ class App extends Component {
   }
 
   render() {
-    const { searchQuery, products, categorySelected, cartProducts, quantity } = this.state;
+    const { searchQuery, products, categorySelected, cartProducts } = this.state;
     return (
       <BrowserRouter>
         <div>
@@ -97,7 +86,6 @@ class App extends Component {
               <Carrinho
                 products={ products }
                 cartProducts={ cartProducts }
-                quantity={ quantity }
               />
             </Route>
           </Switch>
