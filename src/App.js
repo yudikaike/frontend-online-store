@@ -5,6 +5,7 @@ import './App.css';
 import Carrinho from './components/Carrinho';
 import Home from './components/Home';
 import Filter from './components/Filter';
+import ProductsDetail from './components/ProductsDetail';
 
 class App extends Component {
   constructor() {
@@ -70,6 +71,7 @@ class App extends Component {
               />
             </Route>
             <Route exact path="/carrinho"><Carrinho /></Route>
+            <Route exact path="/Products/:id"><ProductsDetail products={ products } /></Route>
           </Switch>
         </div>
       </BrowserRouter>

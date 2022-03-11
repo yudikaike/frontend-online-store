@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Product extends Component {
   render() {
     const { products } = this.props;
     return (
-      products.map(({ thumbnail, title, price }, index) => (
+      products.map(({ thumbnail, title, price, id }, index) => (
         <div key={ index } data-testid="product" className="Product">
           <img src={ thumbnail } alt={ title } />
           <p>{ title }</p>
           <p>{ price }</p>
+          <Link to={ `/Products/${id}` }> Detalhes </Link>
         </div>
       ))
     );
