@@ -1,19 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Products from './Products';
 
 class Home extends Component {
   render() {
+    const {
+      searchQuery,
+      products,
+      categorySelected,
+      handleSearchByQuery,
+      OnClickSearch,
+    } = this.props;
     return (
       <div>
         <Link to="/Carrinho" data-testid="shopping-cart-button">
           Carrinho de Compras
         </Link>
-        <input type="text" />
-        <h1 data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </h1>
+        <div>
+          <input
+            onChange={ handleSearchByQuery }
+            data-testid="query-input"
+            type="text"
+          />
+          <button
+            onClick={ OnClickSearch }
+            data-testid="query-button"
+            type="button"
+          >
+            Pesquisar
+          </button>
+          <Products
+            searchQuery={ searchQuery }
+            products={ products }
+            categorySelected={ categorySelected }
+          />
+        </div>
       </div>
     );
   }
 }
+
+Home.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  products: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  categorySelected: PropTypes.bool.isRequired,
+  handleSearchByQuery: PropTypes.func.isRequired,
+  OnClickSearch: PropTypes.func.isRequired,
+};
+
+Home.defaultProps = {
+  products: [],
+};
+
 export default Home;
