@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { getProductsFromCategoryAndQuery } from './services/api';
-import Products from './components/Products';
-import './App.css';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
+import { getProductsFromCategoryAndQuery } from './services/api';
+import './App.css';
 import Carrinho from './components/Carrinho';
 import Home from './components/Home';
 import Filter from './components/Filter';
@@ -13,16 +12,28 @@ class App extends Component {
     this.state = {
       inputValue: '',
       searchQuery: '',
+      categorySelected: false,
       products: [],
     };
     this.handleSearchByQuery = this.handleSearchByQuery.bind(this);
     this.OnClickSearch = this.OnClickSearch.bind(this);
+    this.handleSearchByCategory = this.handleSearchByCategory.bind(this);
   }
 
   handleSearchByQuery({ target }) {
     const { value } = target;
     this.setState({
       inputValue: value,
+    });
+  }
+
+  async handleSearchByCategory({ target }) {
+    const { value } = target;
+    const request = await getProductsFromCategoryAndQuery(value, '');
+    const products = await request.results;
+    this.setState({
+      products,
+      categorySelected: true,
     });
   }
 
@@ -43,33 +54,20 @@ class App extends Component {
   }
 
   render() {
-    const { searchQuery, products } = this.state;
+    const { searchQuery, products, categorySelected } = this.state;
     return (
-      <div>
-        <input
-          onChange={ this.handleSearchByQuery }
-          data-testid="query-input"
-          type="text"
-        />
-        <button
-          onClick={ this.OnClickSearch }
-          data-testid="query-button"
-          type="button"
-        >
-          Pesquisar
-        </button>
-        <Products
-          searchQuery={ searchQuery }
-          products={ products }
-          renderProducts={ this.renderProducts }
-        />
-      </div>
       <BrowserRouter>
         <div>
           <Switch>
             <Route exact path="/">
-              <Filter />
-              <Home />
+              <Filter handleSearchByCategory={ this.handleSearchByCategory } />
+              <Home
+                searchQuery={ searchQuery }
+                products={ products }
+                categorySelected={ categorySelected }
+                handleSearchByQuery={ this.handleSearchByQuery }
+                OnClickSearch={ this.OnClickSearch }
+              />
             </Route>
             <Route exact path="/carrinho"><Carrinho /></Route>
           </Switch>

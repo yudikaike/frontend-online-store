@@ -4,8 +4,8 @@ import Product from './Product';
 
 class Products extends Component {
   renderProducts() {
-    const { searchQuery, products } = this.props;
-    if (searchQuery) {
+    const { searchQuery, categorySelected, products } = this.props;
+    if (searchQuery || categorySelected) {
       if (!products.length) {
         return (
           <div>Nenhum produto encontrado.</div>
@@ -33,6 +33,7 @@ class Products extends Component {
 
 Products.propTypes = {
   searchQuery: PropTypes.string.isRequired,
+  categorySelected: PropTypes.bool.isRequired,
   products: PropTypes.arrayOf(
     PropTypes.object,
   ),
