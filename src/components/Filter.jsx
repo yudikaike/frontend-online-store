@@ -10,24 +10,23 @@ class Filter extends React.Component {
   }
 
   componentDidMount() {
-    this.funcTeste();
+    this.fetchCategories();
   }
 
-  funcTeste = () => {
-    api.getCategories().then((categorie) => {
-      this.setState({ categories: categorie });
+  fetchCategories = () => {
+    api.getCategories().then((category) => {
+      this.setState({ categories: category });
     });
   }
 
   render() {
     const { categories } = this.state;
-    console.log(categories);
     return (
       <div>
-        {categories.map((categorie) => (
-          <label data-testid="category" key={ categorie.id } htmlFor="input-categoty">
-            { categorie.name }
-            <input type="radio" id="input-categoty" />
+        {categories.map((category) => (
+          <label data-testid="category" key={ category.id } htmlFor="input-category">
+            { category.name }
+            <input type="radio" id="input-category" />
           </label>
         ))}
       </div>
