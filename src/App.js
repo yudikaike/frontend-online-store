@@ -71,7 +71,12 @@ class App extends Component {
               />
             </Route>
             <Route exact path="/carrinho"><Carrinho /></Route>
-            <Route exact path="/Products/:id"><ProductsDetail products={ products } /></Route>
+            <Route
+              exact
+              path="/Products/:id"
+              render={ (matchProps) => <ProductsDetail { ...matchProps }
+                products={ products } /> }
+            />
           </Switch>
         </div>
       </BrowserRouter>

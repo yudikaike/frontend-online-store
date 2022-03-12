@@ -11,7 +11,7 @@ class Product extends Component {
           <img src={ thumbnail } alt={ title } />
           <p>{ title }</p>
           <p>{ price }</p>
-          <Link to={ `/Products/${id}` }> Detalhes </Link>
+          <Link data-testid="product-detail-link" to={ `/Products/${id}` }>Detalhes</Link>
         </div>
       ))
     );
