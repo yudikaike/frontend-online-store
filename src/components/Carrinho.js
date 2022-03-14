@@ -51,10 +51,22 @@ class Carrinho extends React.Component {
 }
 
 Carrinho.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.object,
-  ).isRequired,
   cartProducts: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  checkQuantity: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  removeItem: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  addItem: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  quantity: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  filteredResults: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
 };

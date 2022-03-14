@@ -28,6 +28,38 @@ class App extends Component {
     this.checkQuantity = this.checkQuantity.bind(this);
   }
 
+  handleSearchByQuery({ target }) {
+    const { value } = target;
+    this.setState({
+      inputValue: value,
+    });
+  }
+
+  async handleSearchByCategory({ target }) {
+    const { value } = target;
+    const request = await getProductsFromCategoryAndQuery(value, '');
+    const products = await request.results;
+    this.setState({
+      products,
+      categorySelected: true,
+    });
+  }
+
+  checkQuantity() {
+    const { products, cartProducts } = this.state;
+    const results = cartProducts
+      .map((cartId) => products.find(({ id }) => cartId === id));
+    const filteredResults = results
+      .filter((result, index) => result !== results[index + 1]);
+    const quantity = filteredResults
+      .map(({ id }) => cartProducts
+        .filter((cartProductId) => cartProductId === id).length);
+    this.setState({
+      filteredResults,
+      quantity,
+    });
+  }
+
   addItem({ target }) {
     const { value } = target;
     const { quantity } = this.state;
@@ -46,38 +78,6 @@ class App extends Component {
         quantity,
       });
     }
-  }
-
-  checkQuantity() {
-    const { products, cartProducts } = this.state;
-    const results = cartProducts
-      .map((cartId) => products.find(({ id }) => cartId === id));
-    const filteredResults = results
-      .filter((result, index) => result !== results[index + 1]);
-    const quantity = filteredResults
-      .map(({ id }) => cartProducts
-        .filter((cartProductId) => cartProductId === id).length);
-    this.setState({
-      filteredResults,
-      quantity,
-    });
-  }
-
-  handleSearchByQuery({ target }) {
-    const { value } = target;
-    this.setState({
-      inputValue: value,
-    });
-  }
-
-  async handleSearchByCategory({ target }) {
-    const { value } = target;
-    const request = await getProductsFromCategoryAndQuery(value, '');
-    const products = await request.results;
-    this.setState({
-      products,
-      categorySelected: true,
-    });
   }
 
   addCartProducts({ target }) {
@@ -104,13 +104,13 @@ class App extends Component {
   }
 
   render() {
-    const { 
+    const {
       searchQuery,
-      products, 
+      products,
       categorySelected,
       cartProducts,
       filteredResults,
-      quantity 
+      quantity,
     } = this.state;
     return (
       <BrowserRouter>
