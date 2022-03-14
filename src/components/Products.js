@@ -4,7 +4,7 @@ import Product from './Product';
 
 class Products extends Component {
   renderProducts() {
-    const { searchQuery, categorySelected, products } = this.props;
+    const { searchQuery, categorySelected, products, addCartProducts } = this.props;
     if (searchQuery || categorySelected) {
       if (!products.length) {
         return (
@@ -12,7 +12,7 @@ class Products extends Component {
         );
       }
       return (
-        <Product products={ products } />
+        <Product products={ products } addCartProducts={ addCartProducts } />
       );
     }
     return (
@@ -34,6 +34,7 @@ class Products extends Component {
 Products.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   categorySelected: PropTypes.bool.isRequired,
+  addCartProducts: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(
     PropTypes.object,
   ),

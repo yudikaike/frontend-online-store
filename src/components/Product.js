@@ -3,13 +3,21 @@ import PropTypes from 'prop-types';
 
 class Product extends Component {
   render() {
-    const { products } = this.props;
+    const { products, addCartProducts } = this.props;
     return (
-      products.map(({ thumbnail, title, price }, index) => (
+      products.map(({ thumbnail, title, price, id }, index) => (
         <div key={ index } data-testid="product" className="Product">
           <img src={ thumbnail } alt={ title } />
           <p>{ title }</p>
           <p>{ price }</p>
+          <button
+            onClick={ addCartProducts }
+            type="button"
+            value={ id }
+            data-testid="product-add-to-cart"
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
       ))
     );
@@ -17,6 +25,7 @@ class Product extends Component {
 }
 
 Product.propTypes = {
+  addCartProducts: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(
     PropTypes.object,
   ),

@@ -11,6 +11,7 @@ class Home extends Component {
       categorySelected,
       handleSearchByQuery,
       OnClickSearch,
+      addCartProducts,
     } = this.props;
     return (
       <div>
@@ -34,6 +35,7 @@ class Home extends Component {
             searchQuery={ searchQuery }
             products={ products }
             categorySelected={ categorySelected }
+            addCartProducts={ addCartProducts }
           />
         </div>
       </div>
@@ -49,6 +51,7 @@ Home.propTypes = {
   categorySelected: PropTypes.bool.isRequired,
   handleSearchByQuery: PropTypes.func.isRequired,
   OnClickSearch: PropTypes.func.isRequired,
+  addCartProducts: PropTypes.func.isRequired,
 };
 
 Home.defaultProps = {
