@@ -5,6 +5,7 @@ import './App.css';
 import Carrinho from './components/Carrinho';
 import Home from './components/Home';
 import Filter from './components/Filter';
+import ProductsDetail from './components/ProductsDetail';
 
 class App extends Component {
   constructor() {
@@ -88,6 +89,14 @@ class App extends Component {
                 cartProducts={ cartProducts }
               />
             </Route>
+            <Route
+              exact
+              path="/Products/:id"
+              render={ (matchProps) => (<ProductsDetail
+                { ...matchProps.match }
+                products={ products }
+              />) }
+            />
           </Switch>
         </div>
       </BrowserRouter>
