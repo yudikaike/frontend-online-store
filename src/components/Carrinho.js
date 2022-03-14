@@ -28,7 +28,7 @@ class Carrinho extends React.Component {
     const { cartProducts } = this.props;
     return (
       <div>
-        { cartProducts === []
+        { cartProducts.length === 0
           ? <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
           : this.renderCartItems() }
       </div>
