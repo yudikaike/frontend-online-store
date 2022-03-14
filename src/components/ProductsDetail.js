@@ -1,25 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ProductsDetails extends React.Component {
-  constructor() {
-    super();
-    this.setState({
-    });
-  }
-
   render() {
-    const { match , products } = this.props;
-    const prod = products.find(produto => produto.id === match.params.id);
+    const { params, products } = this.props;
+    const product = products.find(({ id }) => id === params.id);
+    const { thumbnail, title, price } = product;
     return (
       <div>
         <div>
-          <img src={ prod.thumbnail } alt={ prod.title } />
-          <p data-testid="product-detail-name">{ prod.title }</p>
-          <p>{ prod.price }</p>
-          <button type="submit">adicionar carrinho</button>
+          <img src={ thumbnail } alt={ title } />
+          <p data-testid="product-detail-name">{ title }</p>
+          <p>{ price }</p>
+          <button type="submit">Adicionar ao carrinho</button>
         </div>
       </div>
     );
   }
 }
+
+ProductsDetails.propTypes = {
+  params: PropTypes.objectOf(
+    PropTypes.string,
+  ).isRequired,
+  products: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+};
+
 export default ProductsDetails;

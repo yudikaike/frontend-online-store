@@ -74,8 +74,10 @@ class App extends Component {
             <Route
               exact
               path="/Products/:id"
-              render={ (matchProps) => <ProductsDetail { ...matchProps }
-                products={ products } /> }
+              render={ (matchProps) => (<ProductsDetail
+                { ...matchProps.match }
+                products={ products }
+              />) }
             />
           </Switch>
         </div>
