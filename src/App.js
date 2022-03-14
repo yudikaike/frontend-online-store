@@ -15,10 +15,12 @@ class App extends Component {
       searchQuery: '',
       categorySelected: false,
       products: [],
+      cartProducts: [],
     };
     this.handleSearchByQuery = this.handleSearchByQuery.bind(this);
     this.OnClickSearch = this.OnClickSearch.bind(this);
     this.handleSearchByCategory = this.handleSearchByCategory.bind(this);
+    this.addCartProducts = this.addCartProducts.bind(this);
   }
 
   handleSearchByQuery({ target }) {
@@ -38,6 +40,13 @@ class App extends Component {
     });
   }
 
+  addCartProducts({ target }) {
+    const { value } = target;
+    this.setState((prevState) => ({
+      cartProducts: [...prevState.cartProducts, value],
+    }));
+  }
+
   async OnClickSearch() {
     const { inputValue } = this.state;
     if (inputValue !== '') {
@@ -55,7 +64,7 @@ class App extends Component {
   }
 
   render() {
-    const { searchQuery, products, categorySelected } = this.state;
+    const { searchQuery, products, categorySelected, cartProducts } = this.state;
     return (
       <BrowserRouter>
         <div>
@@ -68,9 +77,18 @@ class App extends Component {
                 categorySelected={ categorySelected }
                 handleSearchByQuery={ this.handleSearchByQuery }
                 OnClickSearch={ this.OnClickSearch }
+                addCartProducts={ this.addCartProducts }
               />
             </Route>
-            <Route exact path="/carrinho"><Carrinho /></Route>
+            <Route
+              exact
+              path="/carrinho"
+            >
+              <Carrinho
+                products={ products }
+                cartProducts={ cartProducts }
+              />
+            </Route>
             <Route
               exact
               path="/Products/:id"
