@@ -95,6 +95,7 @@ class App extends Component {
               render={ (matchProps) => (<ProductsDetail
                 { ...matchProps.match }
                 products={ products }
+                addCartProducts={ this.addCartProducts }
               />) }
             />
           </Switch>
