@@ -35,7 +35,7 @@ class Carrinho extends React.Component {
         >
           -
         </button>
-        <Link to='/checkout' data-testid="checkout-products">Finalizar Compra</Link>
+        <Link to="/checkout" data-testid="checkout-products">Finalizar Compra</Link>
       </div>
     ));
   }

@@ -16,7 +16,7 @@ class Checkout extends React.Component {
     const quantity = localStorage.getItem('quantity');
     this.setState({
       quantity: JSON.parse(quantity),
-    }, () => { this.totalPrice() });
+    }, () => { this.totalPrice(); });
   }
 
   totalPrice() {
@@ -41,60 +41,61 @@ class Checkout extends React.Component {
     return (
       <div>
         <div>
-            { filteredResults.map((product, index) => (
-              <div key={ index }>
-                <div>{product.title}</div>
-                <div>{ totalPrices[index]}</div>
-              </div>))}
+          { filteredResults.map((product, index) => (
+            <div key={ index }>
+              <div>{product.title}</div>
+              <div>{ totalPrices[index]}</div>
+            </div>))}
         </div>
-        <p>Total: 
-            { this.sumPrices() }
+        <p>
+          Total:
+          { this.sumPrices() }
         </p>
         <div>
           <form>
-            <label>
+            <label htmlFor="checkout-fullname">
               Nome completo:
-              <input type="text" data-testid="checkout-fullname" />
+              <input type="text" id="checkout-fullname" data-testid="checkout-fullname" />
             </label>
-            <label>
+            <label htmlFor="checkout-email">
               Email:
-              <input type="text" data-testid="checkout-email" />
+              <input type="text" id="checkout-email" data-testid="checkout-email" />
             </label>
-            <label>
+            <label htmlFor="checkout-cpf">
               CPF:
-              <input type="text" data-testid="checkout-cpf" />
+              <input type="text" id="checkout-cpf" data-testid="checkout-cpf" />
             </label>
-            <label>
+            <label htmlFor="checkout-phone">
               Telefone:
-              <input type="text" data-testid="checkout-phone" />
+              <input type="text" id="checkout-phone" data-testid="checkout-phone" />
             </label>
-            <label>
+            <label htmlFor="checkout-cep">
               CEP:
-              <input type="text" data-testid="checkout-cep" />
+              <input type="text" id="checkout-cep" data-testid="checkout-cep" />
             </label>
-            <label>
+            <label htmlFor="checkout-address">
               Endereço:
-              <input type="text" data-testid="checkout-address" />
+              <input type="text" id="checkout-address" data-testid="checkout-address" />
             </label>
             <button type="button">Finalizar</button>
           </form>
           <div>
-            <label>
+            <label htmlFor="payment-boleto">
               Boleto
-              <input type="checkbox" />
+              <input id="payment-boleto" type="checkbox" />
             </label>
             <p>Cartão de Crédito</p>
-            <label>
+            <label htmlFor="payment-visa">
               Visa
-              <input type="checkbox" />
+              <input id="payment-visa" type="checkbox" />
             </label>
-            <label>
+            <label htmlFor="payment-mastercard">
               Mastercard
-              <input type="checkbox" />
+              <input id="payment-mastercard" type="checkbox" />
             </label>
-            <label>
+            <label htmlFor="payment-elo">
               Elo
-              <input type="checkbox" />
+              <input id="payment-elo" type="checkbox" />
             </label>
           </div>
         </div>
@@ -102,5 +103,11 @@ class Checkout extends React.Component {
     );
   }
 }
+
+Checkout.propTypes = {
+  filteredResults: PropTypes.arrayOf(
+    PropTypes.object,
+  ).isRequired,
+};
 
 export default Checkout;

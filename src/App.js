@@ -171,8 +171,9 @@ class App extends Component {
               />) }
             />
             <Route
-              exact path="/checkout"
-              render={ () => (<Checkout filteredResults={ filteredResults }/>) } 
+              exact
+              path="/checkout"
+              render={ () => (<Checkout filteredResults={ filteredResults } />) }
             />
           </Switch>
         </div>
