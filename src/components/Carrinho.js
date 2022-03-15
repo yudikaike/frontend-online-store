@@ -7,19 +7,33 @@ class Carrinho extends React.Component {
     this.renderCartItems = this.renderCartItems.bind(this);
   }
 
+  componentDidMount() {
+    const { checkQuantity } = this.props;
+    checkQuantity();
+  }
+
   renderCartItems() {
-    const { products, cartProducts } = this.props;
-    const results = cartProducts
-      .map((cartId) => products.find(({ id }) => cartId === id));
-    const filteredResults = results
-      .filter((result, index) => result !== results[index + 1]);
-    const quantity = filteredResults
-      .map(({ id }) => cartProducts
-        .filter((cartProductId) => cartProductId === id).length);
+    const { filteredResults, quantity, addItem, removeItem } = this.props;
     return filteredResults.map((result, index) => (
       <div key={ index }>
         <p data-testid="shopping-cart-product-name">{ result.title }</p>
         <p data-testid="shopping-cart-product-quantity">{ quantity[index] }</p>
+        <button
+          data-testid="product-increase-quantity"
+          onClick={ addItem }
+          value={ index }
+          type="button"
+        >
+          +
+        </button>
+        <button
+          data-testid="product-decrease-quantity"
+          onClick={ removeItem }
+          value={ index }
+          type="button"
+        >
+          -
+        </button>
       </div>
     ));
   }
@@ -37,10 +51,22 @@ class Carrinho extends React.Component {
 }
 
 Carrinho.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.object,
-  ).isRequired,
   cartProducts: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  checkQuantity: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  removeItem: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  addItem: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  quantity: PropTypes.arrayOf(
+    PropTypes.string,
+  ).isRequired,
+  filteredResults: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
 };

@@ -16,11 +16,16 @@ class App extends Component {
       categorySelected: false,
       products: [],
       cartProducts: [],
+      quantity: [],
+      filteredResults: [],
     };
     this.handleSearchByQuery = this.handleSearchByQuery.bind(this);
     this.OnClickSearch = this.OnClickSearch.bind(this);
     this.handleSearchByCategory = this.handleSearchByCategory.bind(this);
     this.addCartProducts = this.addCartProducts.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+    this.checkQuantity = this.checkQuantity.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +59,48 @@ class App extends Component {
     });
   }
 
+  checkQuantity() {
+    const { products, cartProducts } = this.state;
+    const results = cartProducts
+      .map((cartId) => products.find(({ id }) => cartId === id));
+    const filteredResults = results
+      .filter((result, index) => result !== results[index + 1]);
+    const quantity = filteredResults
+      .map(({ id }) => cartProducts
+        .filter((cartProductId) => cartProductId === id).length);
+    this.setState({
+      filteredResults,
+      quantity,
+    });
+  }
+
+  addItem({ target }) {
+    const { value } = target;
+    const { quantity } = this.state;
+    quantity[value] += 1;
+    this.setState({
+      quantity,
+    });
+  }
+
+  removeItem({ target }) {
+    const { value } = target;
+    const { quantity } = this.state;
+    if (quantity[value] > 0) {
+      quantity[value] -= 1;
+      this.setState({
+        quantity,
+      });
+    }
+  }
+
+  addCartProducts({ target }) {
+    const { value } = target;
+    this.setState((prevState) => ({
+      cartProducts: [...prevState.cartProducts, value],
+    }));
+  }
+
   async OnClickSearch() {
     const { inputValue } = this.state;
     if (inputValue !== '') {
@@ -78,7 +125,14 @@ class App extends Component {
   }
 
   render() {
-    const { searchQuery, products, categorySelected, cartProducts } = this.state;
+    const {
+      searchQuery,
+      products,
+      categorySelected,
+      cartProducts,
+      filteredResults,
+      quantity,
+    } = this.state;
     return (
       <BrowserRouter>
         <div>
@@ -101,6 +155,11 @@ class App extends Component {
               <Carrinho
                 products={ products }
                 cartProducts={ cartProducts }
+                addItem={ this.addItem }
+                removeItem={ this.removeItem }
+                checkQuantity={ this.checkQuantity }
+                filteredResults={ filteredResults }
+                quantity={ quantity }
               />
             </Route>
             <Route
