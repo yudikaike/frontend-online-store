@@ -23,6 +23,20 @@ class App extends Component {
     this.addCartProducts = this.addCartProducts.bind(this);
   }
 
+  componentDidMount() {
+    const products = localStorage.getItem('products');
+    if (products) {
+      this.setState({
+        products: JSON.parse(products),
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    const { products } = this.state;
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+
   handleSearchByQuery({ target }) {
     const { value } = target;
     this.setState({
@@ -40,13 +54,6 @@ class App extends Component {
     });
   }
 
-  addCartProducts({ target }) {
-    const { value } = target;
-    this.setState((prevState) => ({
-      cartProducts: [...prevState.cartProducts, value],
-    }));
-  }
-
   async OnClickSearch() {
     const { inputValue } = this.state;
     if (inputValue !== '') {
@@ -61,6 +68,13 @@ class App extends Component {
         searchQuery: '',
       });
     }
+  }
+
+  addCartProducts({ target }) {
+    const { value } = target;
+    this.setState((prevState) => ({
+      cartProducts: [...prevState.cartProducts, value],
+    }));
   }
 
   render() {
@@ -93,9 +107,11 @@ class App extends Component {
               exact
               path="/Products/:id"
               render={ (matchProps) => (<ProductsDetail
-                { ...matchProps.match }
-                products={ products }
+                { ...matchProps.match.params }
                 addCartProducts={ this.addCartProducts }
+                saveReview={ this.saveReview }
+                onInputChange={ this.onInputChange }
+                state={ this.state }
               />) }
             />
           </Switch>
