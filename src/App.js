@@ -28,6 +28,20 @@ class App extends Component {
     this.checkQuantity = this.checkQuantity.bind(this);
   }
 
+  componentDidMount() {
+    const products = localStorage.getItem('products');
+    if (products) {
+      this.setState({
+        products: JSON.parse(products),
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    const { products } = this.state;
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+
   handleSearchByQuery({ target }) {
     const { value } = target;
     this.setState({
@@ -103,6 +117,13 @@ class App extends Component {
     }
   }
 
+  addCartProducts({ target }) {
+    const { value } = target;
+    this.setState((prevState) => ({
+      cartProducts: [...prevState.cartProducts, value],
+    }));
+  }
+
   render() {
     const {
       searchQuery,
@@ -145,9 +166,11 @@ class App extends Component {
               exact
               path="/Products/:id"
               render={ (matchProps) => (<ProductsDetail
-                { ...matchProps.match }
-                products={ products }
+                { ...matchProps.match.params }
                 addCartProducts={ this.addCartProducts }
+                saveReview={ this.saveReview }
+                onInputChange={ this.onInputChange }
+                state={ this.state }
               />) }
             />
           </Switch>
