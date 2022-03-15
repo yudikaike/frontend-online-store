@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Carrinho extends React.Component {
   constructor() {
@@ -34,6 +35,7 @@ class Carrinho extends React.Component {
         >
           -
         </button>
+        <Link to='/checkout' data-testid="checkout-products">Finalizar Compra</Link>
       </div>
     ));
   }
@@ -54,20 +56,14 @@ Carrinho.propTypes = {
   cartProducts: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
-  checkQuantity: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-  removeItem: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
-  addItem: PropTypes.arrayOf(
-    PropTypes.string,
-  ).isRequired,
+  checkQuantity: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
   quantity: PropTypes.arrayOf(
-    PropTypes.string,
+    PropTypes.number,
   ).isRequired,
   filteredResults: PropTypes.arrayOf(
-    PropTypes.string,
+    PropTypes.object,
   ).isRequired,
 };
 

@@ -6,6 +6,7 @@ import Carrinho from './components/Carrinho';
 import Home from './components/Home';
 import Filter from './components/Filter';
 import ProductsDetail from './components/ProductsDetail';
+import Checkout from './components/Checkout';
 
 class App extends Component {
   constructor() {
@@ -68,6 +69,7 @@ class App extends Component {
     const quantity = filteredResults
       .map(({ id }) => cartProducts
         .filter((cartProductId) => cartProductId === id).length);
+    localStorage.setItem('quantity', JSON.stringify(quantity));
     this.setState({
       filteredResults,
       quantity,
@@ -78,6 +80,7 @@ class App extends Component {
     const { value } = target;
     const { quantity } = this.state;
     quantity[value] += 1;
+    localStorage.setItem('quantity', JSON.stringify(quantity));
     this.setState({
       quantity,
     });
@@ -88,6 +91,7 @@ class App extends Component {
     const { quantity } = this.state;
     if (quantity[value] > 0) {
       quantity[value] -= 1;
+      localStorage.setItem('quantity', JSON.stringify(quantity));
       this.setState({
         quantity,
       });
@@ -115,13 +119,6 @@ class App extends Component {
         searchQuery: '',
       });
     }
-  }
-
-  addCartProducts({ target }) {
-    const { value } = target;
-    this.setState((prevState) => ({
-      cartProducts: [...prevState.cartProducts, value],
-    }));
   }
 
   render() {
@@ -172,6 +169,10 @@ class App extends Component {
                 onInputChange={ this.onInputChange }
                 state={ this.state }
               />) }
+            />
+            <Route
+              exact path="/checkout"
+              render={ () => (<Checkout filteredResults={ filteredResults }/>) } 
             />
           </Switch>
         </div>
