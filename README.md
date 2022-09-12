@@ -1,16 +1,24 @@
-# 🚧 README em construção 🚧
+<h1>Frontend Online Store</h1>
 
-<!-- Olá, Tryber!
+<b>Este projeto foi feito em conjunto com <a href="https://github.com/LoanMatheus">Loan Matheus</a>, <a href="https://github.com/kerleypablo">Kerley Pablo</a>, <a href="https://github.com/luizpastana">Luiz Pastana</a> e <a href="https://github.com/MateusLucas94">Matheus Lucas</a></b>
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+<h2>Descrição sobre o projeto</h2>
 
-É essencial que você preencha esse documento por conta própria, ok?
+<i>Frontend Online Store</i> é uma loja online de produtos variados, provenientes da API do MercadoLivre, desenvolvida para a prática dos conceitos do <b>React.js</b>, <b>React Router</b>, do consumo de uma API externa e do uso <b>metodologias ágeis</b> (<b>Scrum</b> e <b>Kanban</b>) para a comunicação e alinhamento de prioridades da equipe.
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
+<h2>Tecnologias utilizadas</h2>
 
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
+<img alt="React" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+<img alt="React Router" src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" />
 
--->
+<h2>Como executar o projeto</h2>
+
+Para instalar as dependências:
+```bash
+npm install
+```
+
+Para executar o projeto:
+```bash
+npm start
+```
