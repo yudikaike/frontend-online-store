@@ -1,3 +1,4 @@
 import Main from './Main';
+import Cart from './Cart';
 
-export default Main;
+export { Main, Cart };
