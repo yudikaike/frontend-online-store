@@ -5,7 +5,7 @@ import Menu from './Menu';
 
 export default class Header extends Component {
   render() {
-    const { setQuery, getProducts } = this.props;
+    const { setQuery, setCategoryId, getProducts } = this.props;
     return (
       <header>
         <input
@@ -22,7 +22,7 @@ export default class Header extends Component {
           Buscar
         </button>
         <Redirect id="shopping-cart-button" path="/cart" text="🛒" />
-        <Menu />
+        <Menu setCategoryId={ setCategoryId } />
       </header>
     );
   }
@@ -30,5 +30,6 @@ export default class Header extends Component {
 
 Header.propTypes = {
   setQuery: PropTypes.func.isRequired,
+  setCategoryId: PropTypes.func.isRequired,
   getProducts: PropTypes.func.isRequired,
 };
