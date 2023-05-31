@@ -1,29 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Redirect } from '../components';
+import { Heading, Redirect, ReviewForm, Reviews } from '../components';
 import { getProductById } from '../services/api';
 
 export default class ProductDetails extends Component {
   constructor() {
     super();
-    this.state = { product: {}, cart: [], isDone: false };
+    this.state = { product: {}, reviews: {}, cart: [], isDone: false };
+    this.submit = this.submit.bind(this);
   }
 
   async componentDidMount() {
     this.getCart();
+    this.getReviews();
     const { match: { params: { id } } } = this.props;
     const product = await getProductById(id);
     this.setState({ product, isDone: true });
   }
 
   componentWillUnmount() {
-    const { cart } = this.state;
+    const { cart, reviews } = this.state;
     localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+  }
+
+  getReviews() {
+    const reviews = JSON.parse(localStorage.getItem('reviews'));
+    if (reviews) this.setState({ reviews });
   }
 
   getCart() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) this.setState({ cart });
+  }
+
+  submit(review) {
+    const { product: { id }, reviews } = this.state;
+    if (!reviews[id]) reviews[id] = [review];
+    else reviews[id].push(review);
+    this.setState({ reviews });
   }
 
   add(product) {
@@ -38,7 +53,7 @@ export default class ProductDetails extends Component {
   }
 
   render() {
-    const { product, isDone } = this.state;
+    const { product, reviews, isDone } = this.state;
     return (
       isDone && (
         <main>
@@ -58,6 +73,8 @@ export default class ProductDetails extends Component {
           >
             Adicionar ao Carrinho
           </button>
+          <ReviewForm submit={ this.submit } />
+          <Reviews id={ product.id } reviews={ reviews } />
         </main>
       ));
   }
