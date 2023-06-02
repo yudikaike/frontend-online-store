@@ -69,6 +69,7 @@ class Main extends Component {
             <button type="button" value={ id } onClick={ this.remove }>x</button>
           </div>))
           : <Heading id="shopping-cart-empty-message" text="Seu carrinho está vazio" /> }
+        <Redirect id="checkout-products" path="/checkout" text="Finalizar compra" />
       </main>
     );
   }
