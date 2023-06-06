@@ -8,6 +8,8 @@ export default class ProductCard extends Component {
     return (
       <div data-testid="product">
         <p>{ product.title }</p>
+        { product.shipping.free_shipping
+          && <span data-testid="free-shipping">Frete Grátis</span> }
         <img src={ product.thumbnail } alt={ `${product.title}-thumbnail` } />
         <p>{ product.price }</p>
         <Redirect
@@ -33,6 +35,9 @@ ProductCard.propTypes = {
     title: PropTypes.string,
     thumbnail: PropTypes.string,
     price: PropTypes.number,
+    shipping: PropTypes.shape({
+      free_shipping: PropTypes.bool,
+    }),
   }).isRequired,
   add: PropTypes.func.isRequired,
 };

@@ -81,6 +81,8 @@ export default class ProductDetails extends Component {
               id="product-detail-name"
               text={ `${product.title} - R$ ${product.price}` }
             />
+            { product.shipping.free_shipping
+              && <span data-testid="free-shipping">Frete Grátis</span> }
             <img src={ product.thumbnail } alt={ product.title } />
             { product.attributes.map(({ name, value_name: value }, index) => (
               <div key={ index }>{`${name}: ${value}`}</div>)) }
