@@ -48,13 +48,14 @@ export default class Main extends Component {
   }
 
   render() {
-    const { products, isDone } = this.state;
+    const { products, cart, isDone } = this.state;
     return (
       <main>
         <Header
           setQuery={ this.setQuery }
           setCategoryId={ this.setCategoryId }
           getProducts={ this.getProducts }
+          quantity={ cart.reduce((total, { quantity }) => total + quantity, 0) }
         />
         { isDone ? <ProductList products={ products } add={ this.add } /> : <Heading
           id="home-initial-message"

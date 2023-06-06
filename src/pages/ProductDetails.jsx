@@ -6,7 +6,7 @@ import { getProductById } from '../services/api';
 export default class ProductDetails extends Component {
   constructor() {
     super();
-    this.state = { product: {}, reviews: {}, cart: [], isDone: false };
+    this.state = { product: {}, reviews: {}, cart: [], quantity: 0, isDone: false };
     this.submit = this.submit.bind(this);
   }
 
@@ -31,7 +31,13 @@ export default class ProductDetails extends Component {
 
   getCart() {
     const cart = JSON.parse(localStorage.getItem('cart'));
+    this.getQuantity(cart);
     if (cart) this.setState({ cart });
+  }
+
+  getQuantity(cart) {
+    const quantity = cart.reduce((total, product) => total + product.quantity, 0);
+    this.setState({ quantity });
   }
 
   submit(review) {
@@ -50,33 +56,37 @@ export default class ProductDetails extends Component {
     } else {
       this.setState({ cart: [...cart, { ...product, quantity: 1 }] });
     }
+    this.getQuantity(cart);
   }
 
   render() {
-    const { product, reviews, isDone } = this.state;
+    const { product, reviews, quantity, isDone } = this.state;
     return (
-      isDone && (
-        <main>
-          <Redirect id="shopping-cart-button" path="/cart" text="🛒" />
-          <Redirect path="/" text="↩️" />
-          <Heading
-            id="product-detail-name"
-            text={ `${product.title} - R$ ${product.price}` }
-          />
-          <img src={ product.thumbnail } alt={ product.title } />
-          { product.attributes.map(({ name, value_name: value }, index) => (
-            <div key={ index }>{`${name}: ${value}`}</div>)) }
-          <button
-            data-testid="product-detail-add-to-cart"
-            type="button"
-            onClick={ () => this.add(product) }
-          >
-            Adicionar ao Carrinho
-          </button>
-          <ReviewForm submit={ this.submit } />
-          <Reviews id={ product.id } reviews={ reviews } />
-        </main>
-      ));
+      <main>
+        <Redirect id="shopping-cart-button" path="/cart" text="🛒" />
+        <span data-testid="shopping-cart-size">{ quantity }</span>
+        <Redirect path="/" text="↩️" />
+        { isDone && (
+          <section>
+            <Heading
+              id="product-detail-name"
+              text={ `${product.title} - R$ ${product.price}` }
+            />
+            <img src={ product.thumbnail } alt={ product.title } />
+            { product.attributes.map(({ name, value_name: value }, index) => (
+              <div key={ index }>{`${name}: ${value}`}</div>)) }
+            <button
+              data-testid="product-detail-add-to-cart"
+              type="button"
+              onClick={ () => this.add(product) }
+            >
+              Adicionar ao Carrinho
+            </button>
+            <ReviewForm submit={ this.submit } />
+            <Reviews id={ product.id } reviews={ reviews } />
+          </section>) }
+      </main>
+    );
   }
 }
 
