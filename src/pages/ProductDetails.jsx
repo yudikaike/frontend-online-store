@@ -51,10 +51,19 @@ export default class ProductDetails extends Component {
     const { cart } = this.state;
     if (cart.some(({ id }) => product.id === id)) {
       const index = cart.findIndex(({ id }) => product.id === id);
-      cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
-      this.setState({ cart });
+      if (cart[index].quantity < cart[index].available_quantity) {
+        cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
+      } else return;
+      this.setState({
+        cart, quantity: cart.reduce((total, { quantity }) => total + quantity, 0),
+      });
     } else {
-      this.setState({ cart: [...cart, { ...product, quantity: 1 }] });
+      this.setState(
+        {
+          cart: [...cart, { ...product, quantity: 1 }],
+          quantity: cart.reduce((total, { quantity }) => total + quantity, 0),
+        },
+      );
     }
     this.getQuantity(cart);
   }

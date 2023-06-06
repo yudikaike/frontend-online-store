@@ -20,10 +20,12 @@ class Main extends Component {
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 
-  add({ target: { value } }) {
+  add({ target }) {
     const { cart } = this.state;
-    const index = cart.findIndex(({ id }) => value === id);
-    cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
+    const index = cart.findIndex(({ id }) => target.value === id);
+    if (cart[index].quantity < cart[index].available_quantity) {
+      cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
+    } else target.disabled = true;
     this.setState({ cart });
   }
 

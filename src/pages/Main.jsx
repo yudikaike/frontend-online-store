@@ -40,7 +40,9 @@ export default class Main extends Component {
     const { cart } = this.state;
     if (cart.some(({ id }) => product.id === id)) {
       const index = cart.findIndex(({ id }) => product.id === id);
-      cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
+      if (cart[index].quantity < cart[index].available_quantity) {
+        cart[index] = { ...cart[index], quantity: cart[index].quantity + 1 };
+      } else return;
       this.setState({ cart });
     } else {
       this.setState({ cart: [...cart, { ...product, quantity: 1 }] });
